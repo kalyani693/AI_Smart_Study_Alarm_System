@@ -1,0 +1,65 @@
+*{
+    padding: 0%;
+    margin: 0%;
+}
+
+body{
+    background-color: rgb(205, 205, 249);
+    color: black;
+    letter-spacing: 0.5px;
+}
+
+.container{
+   margin-top: 20vh;
+   margin-left: 10vw; 
+   margin-right: 10vw;
+   margin-bottom: 20vh;
+   background: linear-gradient(rgb(222, 208, 227), rgb(105, 91, 232));
+   /*background-color: rgb(130, 130, 228);*/
+   border-radius: 15px;
+   box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.card{
+    padding: 10vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#heading{
+    display: flex;
+    
+    justify-content: space-between;
+    padding: 20px;
+}
+
+input{
+    background-color: rgba(237, 237, 241, 0.5);
+    padding: 6px;
+    border-radius: 5px;
+    width: fit-content;
+    height: fit-content;
+}
+
+#registerbtn{
+    padding: 10px;
+    background-color: blue;
+    margin-top: 10vh;
+    border-radius: 10px;   
+}
+
+.loader{
+    border: 4px solid #f3f3f3;
+    border-top:4px solid #3498db;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation:spin 1s linear infinite;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+
+} 
+

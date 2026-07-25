@@ -1,0 +1,11 @@
+FastAPI
+pydantic
+sqlAlchemy
+psycopg2
+dotenv
+uvicorn
+joblib
+pwdlib
+pwdlib[argon2]
+python-jose-3.5.0
+python-multipart
