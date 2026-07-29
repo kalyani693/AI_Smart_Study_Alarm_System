@@ -2,6 +2,11 @@ from pydantic import BaseModel
 from typing import List
 from datetime import time
 
+
+class startsessioninput(BaseModel):
+    subject:str
+    planned_duration:int
+    
 class endsessioninput(BaseModel):
     Session_Id:int
     self_rated_focus:int

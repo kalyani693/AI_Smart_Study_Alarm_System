@@ -1,33 +1,48 @@
 from fastapi import APIRouter, Depends,HTTPException,status
 from app.services.auth import authentication
 from app.database.schema import getdb,studysession
-from app.models.study_alarm import endsessioninput
+from app.models.study_alarm import endsessioninput,startsessioninput
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 from typing import Annotated
-from datetime import datetime,timezone
+from datetime import datetime
 
 router=APIRouter()
 auth=authentication()
 dependancy=Annotated[Session,Depends(getdb)]
 
 @router.post("/startsession")
-async def start(db:dependancy,subject:str,user=Depends(auth.check_user)):
+async def start(db:dependancy,input:startsessioninput,user=Depends(auth.check_user)):
     try:
-        prevsession=db.query(studysession).filter(studysession.Subject==subject and studysession.status=="active").first()
+        prevsession=db.query(studysession).filter(studysession.Subject==input.subject and studysession.status=="active").first()
         if prevsession:
-            raise HTTPException(status_code=409,detail=f"previos session of {subject} is not completed yet. New session Can't  start for this subject.")
+            raise HTTPException(status_code=409,detail=f"previos session of {input.subject} is not completed yet. New session Can't  start for this subject.")
+
+        def timeofday():
+            start_time_hr=datetime.now().strftime("%H")
+            if start_time_hr in ["5","6","7","8","9","10","11","12"]:
+                return "Morning"
+            elif start_time_hr in ["13","14","15","16","17"]:
+                return "Afternoon"
+            elif start_time_hr in ["18","19","20"]:
+                return "Evening"
+            else:
+                return "Night"
+
+
         info=studysession(
             Username=user.Username,
-            Subject=subject,
+            Subject=input.subject,
             start_time=datetime.now().strftime("%H:%M:%S"),
             created_at=datetime.now(),
-            status="active"
+            status="active",
+            planned_duration=input.planned_duration,
+            Time_of_day=timeofday()
         )
 
         db.add(info)
         db.commit()
-        sessiondata=db.query(studysession).filter(studysession.Subject==subject and studysession.status=="active").first()
+        sessiondata=db.query(studysession).filter(studysession.Subject==input.subject and studysession.status=="active").first()
         return{"message":"Session Started!!",
                "Session_Id":sessiondata.Id}
     except Exception as e:
@@ -53,7 +68,7 @@ async def end(db:dependancy,input:endsessioninput,user=Depends(auth.check_user))
                        set "End_time"='{endtime}',
                        "Duration"='{duration}',
                        "self_rated_focus"='{input.self_rated_focus}',
-                       "computed_focus_score"=0,
+                       "computed_focus_score"={sessiondata.planned_duration}/{duration_min if duration_min > 0 else 1}, # planned duration of session/ actual duration
                        "breaks_taken"='{input.Breaks_taken}',
                        "status"='completed'
                        where "Username"='{user.Username}' and "Id"='{input.Session_Id}'; 
@@ -64,7 +79,7 @@ async def end(db:dependancy,input:endsessioninput,user=Depends(auth.check_user))
         if response._soft_closed==True:
             return{"message":"Session Ended!!",
                    "subject":data.Subject,
-                   "Id":Session_Id}
+                   "Id":input.Session_Id}
         else:
             return{"message":"Something went wrong"}
 
