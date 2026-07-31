@@ -28,7 +28,7 @@ print("MAPE:",mean_absolute_percentage_error(ytest,y_pred))#0.1432  error is les
 print("RMSE:",root_mean_squared_error(ytest,y_pred))#0.8334"""
 
 #save model and features
-
+#print(xtrain.columns.tolist())#->['sleep_duration', 'sleep_quality', 'fatigue_level', 'previous_snooze_count', 'study_importance', 'days_since_last_study', 'alarm_hour']
 
 with open("snooze_risk_pred_model.pkl","wb") as f:
    pickle.dump(model,f)

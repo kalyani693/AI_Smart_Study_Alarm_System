@@ -43,9 +43,7 @@ class studysession(base):
     computed_focus_score=Column(Integer,default=0)
     status=Column(VARCHAR(15), nullable=False)
     planned_duration=Column(Integer,default=0)# planned duration of session in minutes
-    Time_of_day=Column(VARCHAR(10), nullable=True,default=None)# add in table
-
-    #add planned duration of session 
+    Time_of_day=Column(VARCHAR(10), nullable=True,default=None) 
 
 class alarmtable(base):
     __tablename__="alarmtable"

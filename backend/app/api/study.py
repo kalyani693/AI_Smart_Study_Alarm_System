@@ -11,7 +11,8 @@ router=APIRouter()
 auth=authentication()
 dependancy=Annotated[Session,Depends(getdb)]
 
-@router.post("/startsession")
+@router.post("/startsession",description="""Subject:["Python","DSA", "DBMS", "Operating Systems", "Machine Learning", "Aptitude", "Ai","Java"]
+""")
 async def start(db:dependancy,input:startsessioninput,user=Depends(auth.check_user)):
     try:
         prevsession=db.query(studysession).filter(studysession.Subject==input.subject and studysession.status=="active").first()
@@ -24,7 +25,7 @@ async def start(db:dependancy,input:startsessioninput,user=Depends(auth.check_us
                 return "Morning"
             elif start_time_hr in ["13","14","15","16","17"]:
                 return "Afternoon"
-            elif start_time_hr in ["18","19","20"]:
+            elif start_time_hr in ["17,""18","19","20"]:
                 return "Evening"
             else:
                 return "Night"
@@ -63,12 +64,13 @@ async def end(db:dependancy,input:endsessioninput,user=Depends(auth.check_user))
         start_dt=datetime.combine(datetime.today(),sessiondata.start_time)   
         endtime=datetime.now().strftime("%H:%M:%S")
         duration=(datetime.now())-start_dt
-        duration_min=duration.total_seconds()/60
+        duration_min=round(duration.total_seconds()/60, 3)
+        computed_focus_score=(sessiondata.planned_duration)/round(duration_min,2) if duration_min > 0 else 1
         query=text(f"""update studysession 
                        set "End_time"='{endtime}',
                        "Duration"='{duration}',
                        "self_rated_focus"='{input.self_rated_focus}',
-                       "computed_focus_score"={sessiondata.planned_duration}/{duration_min if duration_min > 0 else 1}, # planned duration of session/ actual duration
+                       "computed_focus_score"={computed_focus_score},
                        "breaks_taken"='{input.Breaks_taken}',
                        "status"='completed'
                        where "Username"='{user.Username}' and "Id"='{input.Session_Id}'; 

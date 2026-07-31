@@ -2,7 +2,7 @@ from app.database.schema import studysession
 from fastapi import HTTPException
 from sqlalchemy import text
 
-def getbest_Slot(db,user):
+async def getbest_Slot(db,user):
      try: 
         userinfo=db.query(studysession).filter(studysession.Username==user.Username).all()
         if not userinfo:

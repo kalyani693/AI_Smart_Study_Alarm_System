@@ -29,11 +29,15 @@ target=encoded_df["Normalized_focus_Score"]
 #spliting
 xtrain,xtest,ytarin,ytest=train_test_split(features,target,test_size=0.2,random_state=42)
 
-#print(xtrain)
+print(xtrain.columns.tolist())#->['session_duration_inmin', 'breaks_taken_count', 
+#'time_of_day_Afternoon', 'time_of_day_Evening', 'time_of_day_Morning', 'time_of_day_Night', 
+#'subject_type_Ai', 'subject_type_Aptitude', 'subject_type_DBMS', 'subject_type_DSA', 'subject_type_Java', 
+#'subject_type_Machine Learning', 'subject_type_Operating Systems', 'subject_type_Python', 'day_of_week_Friday', 
+#'day_of_week_Monday', 'day_of_week_Saturday', 'day_of_week_Sunday', 'day_of_week_Thursday', 'day_of_week_Tuesday', 'day_of_week_Wednesday']
 
 
 
-model=LinearRegression()
+"""model=LinearRegression()
 model.fit(xtrain,ytarin)
 
 
@@ -45,7 +49,7 @@ print("MAPE:",mean_absolute_percentage_error(ytest,y_pred))#0.079 which is far g
 with open("focus_score_pred_model.pkl","wb") as f:
    pickle.dump(model,f)
 with open("focusscore_model_feature.pkl","wb") as f:
-   pickle.dump(xtrain.columns.tolist(),f)
+   pickle.dump(xtrain.columns.tolist(),f)"""
 
 
 
