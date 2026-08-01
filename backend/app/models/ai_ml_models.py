@@ -15,8 +15,6 @@ class focus_score_input(BaseModel):
 
 class snooze_risk_input(BaseModel):
     sleep_duration:float
-    fatigue_level:int  
-    sleep_quality:int
     study_importance:int
     alarm_hour:int
       

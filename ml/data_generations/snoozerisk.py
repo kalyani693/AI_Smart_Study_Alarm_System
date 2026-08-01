@@ -1,85 +1,168 @@
 import numpy as np
 import pandas as pd
 
+np.random.seed(42)
+
+N = 10000
+
+days = [
+    "Monday", "Tuesday", "Wednesday",
+    "Thursday", "Friday",
+    "Saturday", "Sunday"
+]
+
 
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
 
-np.random.seed(42)
-
-n = 10_000
+# ----------------------------
+# Basic user information
+# ----------------------------
 
 data = pd.DataFrame({
-    "user_id": np.random.randint(1, 501, n),
-
-    "sleep_duration": np.clip(
-        np.random.normal(6.5, 1.5, n),
-        3,
-        10
-    ),
-
-    "sleep_quality": np.random.randint(1, 11, n),
-
-    "fatigue_level": np.random.randint(1, 11, n),
-
-    "previous_snooze_count": np.random.poisson(1.5, n),
-
-    "study_importance": np.random.randint(1, 11, n),
-
-    "days_since_last_study": np.random.randint(0, 8, n),
-
+    "user_id": np.random.randint(1, 501, N),
+    "day_of_week": np.random.choice(
+        days,
+        N,
+        p=[0.16,0.16,0.16,0.16,0.16,0.10,0.10]
+    )
 })
 
+# ----------------------------
+# Weekend
+# ----------------------------
 
-# Alarm time in hours
-data["alarm_hour"] = np.random.choice(
-    [5, 6, 7, 8, 9, 10],
-    n
+data["is_weekend"] = (
+    data["day_of_week"]
+    .isin(["Saturday","Sunday"])
+    .astype(int)
 )
 
+# ----------------------------
+# Study importance
+# Most students fall around 5-8
+# ----------------------------
 
-# Create a behavioural score
+data["study_importance"] = np.clip(
+    np.random.normal(6.5,2,N).round(),
+    1,
+    10
+).astype(int)
+
+# ----------------------------
+# Sleep duration
+# Weekend = more sleep
+# ----------------------------
+
+sleep = np.random.normal(6.7,1.2,N)
+
+sleep += data["is_weekend"]*0.7
+
+sleep = np.clip(sleep,3.5,10)
+
+data["sleep_duration_prev_night"] = sleep.round(1)
+
+# ----------------------------
+# Alarm time
+# Important study -> earlier alarm
+# ----------------------------
+
+alarm = []
+
+for imp in data["study_importance"]:
+
+    if imp >= 8:
+        alarm.append(
+            np.random.choice([5,6,7],p=[0.3,0.45,0.25])
+        )
+
+    elif imp >=5:
+        alarm.append(
+            np.random.choice([6,7,8],p=[0.25,0.45,0.30])
+        )
+
+    else:
+        alarm.append(
+            np.random.choice([7,8,9,10],
+                             p=[0.15,0.35,0.30,0.20])
+        )
+
+data["hour_of_alarm"] = alarm
+
+# ----------------------------
+# Previous snooze history
+# Depends on sleep
+# ----------------------------
+
+base = np.random.poisson(1.2,N)
+
+extra = (
+    (7-data["sleep_duration_prev_night"])
+    .clip(lower=0)
+    .astype(int)
+)
+
+data["snooze_count_last_7_days"] = np.clip(
+    base+extra,
+    0,
+    10
+)
+
+# ----------------------------
+# User personality
+# Some people naturally snooze more
+# ----------------------------
+
+user_bias = np.random.normal(0,0.6,500)
+
+data["user_bias"] = (
+    data["user_id"]
+    .apply(lambda x:user_bias[x-1])
+)
+
+# ----------------------------
+# Random human behaviour
+# ----------------------------
+
+noise = np.random.normal(0,0.5,N)
+
+# ----------------------------
+# Behaviour model
+# ----------------------------
+
 logit = (
-    -2.0
 
-    # Poor sleep increases snooze probability
-    + 0.35 * (7 - data["sleep_duration"])
+    -0.1
 
-    # Poor sleep quality increases snooze probability
-    + 0.25 * (10 - data["sleep_quality"])
+    +0.45*(7-data["sleep_duration_prev_night"])
 
-    # Fatigue increases snooze probability
-    + 0.35 * data["fatigue_level"]
+    +0.40*data["snooze_count_last_7_days"]
 
-    # Previous snoozing behaviour increases future snoozing
-    + 0.45 * data["previous_snooze_count"]
+    +0.35*(8-data["hour_of_alarm"])
 
-    # Early alarms are harder to wake up for
-    + 0.25 * (8 - data["alarm_hour"])
+    -0.22*data["study_importance"]
 
-    # Higher study importance reduces snoozing
-    - 0.20 * data["study_importance"]
+    +0.65*data["is_weekend"]
 
+    +data["user_bias"]
 
-    # Long gap since study increases avoidance
-    + 0.15 * data["days_since_last_study"]
+    +noise
 )
-
 
 data["snooze_probability"] = sigmoid(logit)
 
-
-# Generate actual behaviour
-data["snoozed"] = np.random.binomial(
+data["did_snooze"] = np.random.binomial(
     1,
     data["snooze_probability"]
 )
 
+# Remove hidden columns
+data.drop(columns=["user_bias","is_weekend"], inplace=True)
 
 data.to_csv(
     "synthetic_snoozedata.csv",
     index=False
 )
 
-print(data.head())
+#print(data["did_snooze"].value_counts())
