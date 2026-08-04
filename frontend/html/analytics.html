@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytical Dashboard</title>
+    <link rel="stylesheet" href="../css/analytics.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="heading"><h3>Analytical Dashboard.</h3>
+            <a href="index.html"><button id="closebtn">X</button></div></a>
+            <h6>Your Progress..</h6>
+        </div>
+    </header>
+    <main>
+        <div class="main_container">
+            <div class="item" id="i1"><h4>Total Study Hours</h4>
+            <h3>0</h3></div>
+            <div class="item" id="i2"><h4>Average Focus Score</h4>
+            <h3>0</h3></div>
+            <div class="item" id="i3"><h4>Current Streak</h4>
+            <h3>0</h3></div>
+            <div class="item" id="i4"><h4>Number of sessions</h4>
+            <h3>0</h3></div>
+        </div>
+        
+        <div class="btn-group">
+        <button id="sleep_performance_btn"> Sleep vs Performance Chart</button>
+        <button id="subject_distribution_btn"> Subject Distribution Chart</button>
+        <button id="score_timeofday_btn"> Focus-Score vs Time of Day Chart</button>
+        </div>
+        
+        <div class="charts">
+            
+        </div>
+    </main>
+
+    
+</body>
+<script src="../javascript/analytics.js"></script>
+</html>

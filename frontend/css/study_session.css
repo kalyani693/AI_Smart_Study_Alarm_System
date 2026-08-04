@@ -1,0 +1,134 @@
+*{
+    padding: 0%;
+    margin: 0%;
+}
+body{
+    background-color: rgb(205, 205, 249);
+    padding: 0px;
+    margin: 0px;
+    letter-spacing: 0.5px;
+}
+
+.container{
+   margin-top: 10vh;
+   margin-left: 10vw; 
+   margin-right: 10vw;
+   margin-bottom: 20vh;
+   /*background: linear-gradient(rgb(222, 208, 227), rgb(105, 91, 232));*/
+   background-color:rgb(217, 212, 244);
+   border-radius: 15px;
+   box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.2); 
+   padding-top: 20px;
+   padding-bottom: 20px;
+}
+.heading{
+    text-align: center;
+}
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+#history{
+    padding: 4px;
+}
+#closebtn{
+    padding: 4px;
+    color: red;
+}
+
+.available-sessions, .upcomimg-sessions{
+    display: flex; 
+    flex-direction: row; 
+    flex-wrap: wrap;/*cards next line me shift ho jayenge agar jagah nhi hui toh*/
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    padding: 10px;
+
+}
+
+.session-card{
+    background-color: rgb(174, 169, 213);
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    width: 180px;
+
+    box-shadow: 0 4px 10 px rgba(0, 0, 0, 0.2);
+    /*justify-content:space-around;*/
+    border-radius: 10px;
+    padding: 25px;
+    
+}
+.session-card hr{
+    font-weight: bold;
+    color: white;
+    margin-bottom: 12px;
+}
+.session-heading{
+    display: flex;
+    justify-content: center;
+}
+
+.btn-group{
+    display: flex; 
+    flex-direction: row; 
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.start-btn, .end-btn{
+    flex: 1;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/*.start-btn{
+    background-color: #4caf50;
+    color: white;
+}
+.end-btn{
+    background-color: #f44336;
+    color: white;
+}*/
+
+button{
+    background-color: rgb(214, 207, 228);
+    border: None;
+    border-radius: 4px;
+    padding: 7px;
+    cursor: pointer;
+}
+.start-btn:hover, .end-btn:hover {
+    background-color: rgb(26, 8, 84);
+    color:  white;
+}
+
+.popup{
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border-radius: 12px;
+    width: 80vw;
+    height: 80vh;
+    background-color: rgba(154, 147, 236, 0.5);/*0.5 for transperancy*/
+    backdrop-filter: blur(8px);
+    z-index:1000;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    overflow-y: auto;
+}
+
+.popup.show{
+    display: flex;
+    flex-direction: column;
+}

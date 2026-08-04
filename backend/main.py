@@ -5,6 +5,7 @@ from app.api.study import router as studyrouter
 from app.api.alarm import router as alarmrouter
 from app.api.ml import router as mlrouter
 from app.api.ai import router as airouter
+from app.api.analytics import router as analyticsrouter
 import uvicorn
 
 app=FastAPI(title="AI SMART STUDY ALARM SYSTEM")
@@ -15,6 +16,7 @@ app.include_router(studyrouter,prefix="/study",tags=["Sessions"])
 app.include_router(alarmrouter,prefix="/alarm",tags=["Alarm"])
 app.include_router(mlrouter,prefix="/ml",tags=["ML Endpoints"])
 app.include_router(airouter,prefix="/ai",tags=["AI Endpoints"])
+app.include_router(analyticsrouter,prefix="/analytics",tags=["Analytics"])
 
 
 def __init__():

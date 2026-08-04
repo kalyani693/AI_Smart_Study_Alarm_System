@@ -1,9 +1,10 @@
 from fastapi import APIRouter, Depends,HTTPException,status
 from app.services.auth import authentication
 from app.database.schema import getdb,studysession
-from app.models.study_alarm import endsessioninput,startsessioninput
+from app.models.study_alarm import endsessioninput,startsessioninput,sessionhistoryresponse
 from sqlalchemy import text
 from sqlalchemy.orm import Session
+from sqlalchemy import select, func
 from typing import Annotated
 from datetime import datetime
 
@@ -92,14 +93,15 @@ async def end(db:dependancy,input:endsessioninput,user=Depends(auth.check_user))
 
 @router.get("/history")
 async def history(db:dependancy,user=Depends(auth.check_user)):
-    try:
-        sessiondata=db.query(studysession).filter(studysession.Username==user.Username).all()
-        if not sessiondata:
-            return {"message":"No previos History of session is found."}
+    try: 
+        smt=select(studysession).where(studysession.Username==user.Username)
+        sessiondata=db.execute(smt).scalars().all()
+        if sessiondata:
+            return {"sessionData":sessiondata}
         else:
-          return {"message":sessiondata}
+          return {"sessionData":"No previos History of session is found."}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error in Ending the Session:{str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error in getting Session History:{str(e)}")
 
 
 
