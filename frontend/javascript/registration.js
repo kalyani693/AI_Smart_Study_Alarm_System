@@ -63,11 +63,11 @@ async function connect() {
     let result = document.createElement("h3");
         result.classList.add("result-msg");
         //result.style.color = "green";
-        result.textContent = data.message||"Something went worng"||data.detail||"Registration Successful!";
+        result.textContent = data.message||data.detail||data.details||"Something went worng";
         regibtn.after(result);
 
     if (response.ok){
-        window.location.href="index.html"
+        window.location.href="index.html";
     }    
   }
   catch (error) {
@@ -75,7 +75,7 @@ async function connect() {
         //regibtn.innerHTML=Register
         let error_msg = document.createElement("h4");
         error_msg.classList.add("result-msg");
-        error_msg.textContent = "something went wrong";
+        error_msg.textContent = "Failed to Register";
         error_msg.style.color = "red";
         regibtn.after(error_msg);
     }
