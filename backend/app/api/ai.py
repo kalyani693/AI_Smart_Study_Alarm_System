@@ -35,9 +35,10 @@ async def generateplan(sylabus_file: UploadFile= File(...),user=Depends(auth.che
 
 
 @router.post("/summarize-notes")
-async def summarize_notes(input:str=Form(...,description="""{"Subject":"str"}"""),Notes:UploadFile= File(...),user=Depends(auth.check_user)):
+async def summarize_notes(Notes:UploadFile= File(...),user=Depends(auth.check_user)):#input:str=Form(...,description="""{"Subject":"str"}"""),
     try:
-        subject=sub_name.model_validate_json(input)
+        #subject=sub_name.model_validate_json(input)
+        pass
     except Exception as e:
         raise HTTPException(status_code=429,detail=f"Validation  Error:{str(e)}")
     text=await pdf_to_text(Notes)
