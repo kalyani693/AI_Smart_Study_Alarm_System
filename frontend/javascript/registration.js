@@ -12,7 +12,9 @@ const yearofexperiance=document.getElementById("years-of-experience");
 const keyskills=document.getElementById("key-skills");
 const password=document.getElementById("password");
 
-const regibtn=document.getElementById("registerbtn")
+const regibtn=document.getElementById("registerbtn");
+
+const responsebox=document.querySelector(".responsebox");
 
 async function connect() {
    
@@ -40,7 +42,7 @@ async function connect() {
   "work_history": {
     "job_title":job_title.value,
     "Company_Name":companyname.value,
-    "Year_of_Experience":yearofexperiance.value
+    "Year_of_Experience":yearofexperiance.value||0
   },
   "Key_skills":keyskills.value,
   "Password":password.value
@@ -55,29 +57,23 @@ async function connect() {
         },
         body:JSON.stringify(input)
     });
+
     let data=await response.json();
+    const res=data.message||"someting went wrong";
+
     console.log(data)
-    //regibtn.innerHTML=Register
     regibtn.disabled=false;
 
-    let result = document.createElement("h3");
-        result.classList.add("result-msg");
-        //result.style.color = "green";
-        result.textContent = data.message||data.detail||data.details||"Something went worng";
-        regibtn.after(result);
-
-    if (response.ok){
-        window.location.href="index.html";
-    }    
+    if(data.detail||data.details){
+        responsebox.innerHTML=`${data.detail||data.details}`;
+    }
+    else {
+        responsebox.innerHTML=`<p style="color:green;">${res}</p>`;
+    }   
   }
   catch (error) {
         console.error("error:", error);
-        //regibtn.innerHTML=Register
-        let error_msg = document.createElement("h4");
-        error_msg.classList.add("result-msg");
-        error_msg.textContent = "Failed to Register";
-        error_msg.style.color = "red";
-        regibtn.after(error_msg);
+        responsebox.innerHTML=`<p style="color:red;">Failed to Register</p>`;
     }
  
 };
