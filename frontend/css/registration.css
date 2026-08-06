@@ -10,18 +10,19 @@ body{
 }
 
 .container{
-   margin-top: 20vh;
+   margin-top: 10vh;
    margin-left: 10vw; 
    margin-right: 10vw;
    margin-bottom: 20vh;
-   background: linear-gradient(rgb(222, 208, 227), rgb(105, 91, 232));
-   /*background-color: rgb(130, 130, 228);*/
+   /*background: linear-gradient(rgb(222, 208, 227), rgb(105, 91, 232));*/
+   background-color:rgb(217, 212, 244);
    border-radius: 15px;
    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.2);
 }
 
 .card{
-    padding: 10vw;
+    /*padding: 10vw;*/
+    padding: 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -45,9 +46,12 @@ input{
 
 #registerbtn{
     padding: 10px;
-    background-color: blue;
+    background-color: rgb(26, 8, 84);
     margin-top: 10vh;
-    border-radius: 10px;   
+    border-radius: 7px; 
+    color: white;  
+    cursor: pointer;
+    border: none;
 }
 
 .loader{
@@ -62,4 +66,16 @@ input{
     margin-right: 10px;
 
 } 
+
+#closebtn{
+    border: none;
+    padding: 7px;
+    cursor: pointer;
+    background-color:rgb(217, 212, 244);
+
+}
+#closebtn:hover{
+    background-color: red;
+    color: white;
+}
 

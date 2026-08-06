@@ -33,8 +33,14 @@ body{
     padding: 4px;
 }
 #closebtn{
-    padding: 4px;
-    color: red;
+    border: none;
+    padding: 7px;
+    cursor: pointer;
+
+}
+#closebtn:hover{
+    background-color: red;
+    color: white;
 }
 
 .available-sessions, .upcomimg-sessions{
@@ -126,6 +132,8 @@ button{
     align-items: center;
     color: black;
     overflow-y: auto;
+
+    margin-bottom: 10vh;
 }
 
 .popup.show{

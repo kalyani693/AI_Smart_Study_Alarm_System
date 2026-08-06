@@ -14,7 +14,8 @@ body {
 
 .headContainer {
     padding: 20px;
-    background: linear-gradient(rgb(237, 230, 239), rgb(105, 91, 232));
+    /*background: linear-gradient(rgb(237, 230, 239), rgb(105, 91, 232));*/
+    background-color: rgb(205, 205, 249);
     margin: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -33,18 +34,19 @@ body {
     user-select: none;
 }
 
-#closebtn {
-    font-weight: bold;
-    color: #3b0854 !important;
+#closebtn{
+    border: none;
     text-decoration: none;
-    padding: 6px 12px;
-    background-color: rgba(255, 255, 255, 0.3);
-    border-radius: 6px;
-    transition: background-color 0.2s;
-}
+    padding: 7px;
+    cursor: pointer;
+    background-color:rgb(217, 212, 244);
+    border-radius: 4px;
+    color: black;
 
-#closebtn:hover {
-    background-color: rgba(255, 255, 255, 0.5);
+}
+#closebtn:hover{
+    background-color: red;
+    color: white;
 }
 
 .welcome {
@@ -76,7 +78,7 @@ body {
     position: relative;
     width: 90px;
     height: 90px;
-    background-color: rgb(56, 22, 192);
+    background-color: rgb(99, 69, 219);
     border-radius: 50%;
     overflow: hidden;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
@@ -153,7 +155,8 @@ body {
 
 /* Details Section */
 .maincontainer {
-    background-color:rgb(131, 120, 228);
+    /*background-color:rgb(131, 120, 228);*/
+    background-color:rgb(217, 212, 244);
     margin: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
