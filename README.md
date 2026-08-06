@@ -177,7 +177,7 @@ source venv/bin/activate
 
 ## Create .env file
 ---
-
+```
 set 
 
 #For Database connection
@@ -193,7 +193,7 @@ openai_api_key=  openai api key
 GROQ_API_KEY= groq api key
 openrouter_api= openrouter api key
 ---
-
+```
 
 ## Install Dependencies
 
