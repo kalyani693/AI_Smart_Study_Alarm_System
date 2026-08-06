@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ai content Tools</title>
+    <link rel="stylesheet" href="../css/ai_content_tool.css">
+</head>
+<body>
+    <div class="container">
+       
+        <div class="heading"><h3>AI Tools</h3></div>
+        <div class="navbar">
+          <a href="index.html"><button id="closebtn">X</button></a>
+        </div>
+
+        <div class="card">
+            <!--chatbot
+            <div class="card-item">
+                <span>Doubt-Solving Chatbot.</span>
+                <a href="#" id="getplan-btn">Chat ⬇ </a>
+                <div id="getplan-box" class="dropdown-menu" style="display: none;">
+                    <input id="file-input" type="file" placeholder="Syllabus">
+                    <input type="date" placeholder="Exam date">
+                    <button id="ok-btn">Ok</button>
+                </div>    
+            </div>
+            -->
+
+            <div class="card-item">
+                <span>Don't waste Your time by Reading n pages, Summarize your Notes.</span>
+                <a href="#" id="sumarizer-btn">Summarizer ⬇</a>
+                <div id="summarizer-box" class="dropdown-menu" style="display: none;">
+                    <h4>Notes:</h4>
+                    <input id="notes-input" type="file" placeholder="Notes">
+                    <br>
+                    <br>
+                    <button id="ok-summarize">Ok</button>
+                </div>
+            </div>
+
+            <div class="card-item"><span>Enhance your learning by practicing MCQ's.</span>
+                <a href="#" id="quize-btn">Quize ⬇</a>
+                <div id="quize-box" class="dropdown-menu" style="display: none;">
+                    <h4>Topic/Notes:</h4>
+                    <input id="topic-input" type="file" placeholder="Topic/Notes">
+                    <br><br>
+                    <button id="ok-quize">Ok</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!--summary popup-->
+        <div class="summary_popup">
+            <div class="topsection">
+                <h4 id="heading">Summary</h4>
+                <a href="ai_content_tools.html"><button id="closebtn">X</button></a>
+            </div>
+            <div class="Summarybox">
+
+            </div>
+        </div>
+
+        <!--quize popup-->
+        <div class="quize_popup">
+            <div class="topsection">
+                <h3 id="heading">Quizes</h3>
+                <a href="ai_content_tools.html"><button id="closebtn">X</button></a>
+            </div>
+            <div class="quizesbox">
+
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../javascript/ai_content_tool.js"></script>
+</html>

@@ -16,24 +16,24 @@ async def getbest_Slot(db,user):
             if morging_avg_score>afternoon_avg_score:
                 if morging_avg_score>evening_avg_score:
                     if morging_avg_score>night_avg_score:
-                        return{"message":"Morning"}
+                        return{"message":"Morning (6am - 11am)"}
                     else:
-                        return{"message":"Night"}
+                        return{"message":"Night (8pm-11pm)"}
                 else:
                     if evening_avg_score>night_avg_score:
-                        return{"message":"Evening"}  
+                        return{"message":"Evening (6pm - 8pm)"}  
                     else:
-                        return{"message":"Night"} 
+                        return{"message":"Night (8pm - 11pm)"} 
             else:
                 if afternoon_avg_score>evening_avg_score:
                     if afternoon_avg_score>night_avg_score:
-                       return{"message":"Afternoon"}
+                       return{"message":"Afternoon (12pm -5pm)"}
                     else:
-                        return{"message":"Night"}
+                        return{"message":"Night (8pm - 11pm)"}
                 else:
                     if evening_avg_score>night_avg_score:
-                        return{"message":"Evening"}   
+                        return{"message":"Evening (6pm - 8pm)"}   
                     else:
-                        return{"message":"Night"} 
+                        return{"message":"Night (8pm - 11pm)"} 
      except Exception as e:
            raise HTTPException(status_code=500,detail=f"Error in Finding Best Slot. Error:{str(e)}") 

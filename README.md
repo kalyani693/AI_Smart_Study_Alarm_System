@@ -59,7 +59,7 @@ FastAPI Backend
     ├── Analytics APIs
     ├── ML Prediction APIs
     │
-Database
+Postgress Database
     │
     ▼
 Machine Learning Models
@@ -77,6 +77,7 @@ Machine Learning Models
 - Uvicorn
 - SQLAlchemy
 - JWT Authentication
+- LLM Integration (GEMINI, GROQ, OpenRouter)
 
 ## Frontend
 
@@ -90,6 +91,7 @@ Machine Learning Models
 - Pandas
 - NumPy
 - Joblib
+- pickel
 
 ## Database
 
@@ -173,6 +175,26 @@ source venv/bin/activate
 
 ---
 
+## Create .env file
+---
+
+set 
+
+#For Database connection
+DATABASE_URL="your Database Url" 
+
+#for JWT authentication
+SECRET_KEY= your secret key
+ALGORITHM="HS256"
+
+#for LLM integration
+GOOGLE_API_KEY=   google api key
+openai_api_key=  openai api key
+GROQ_API_KEY= groq api key
+openrouter_api= openrouter api key
+---
+
+
 ## Install Dependencies
 
 ```bash
@@ -237,7 +259,7 @@ The dashboard provides:
 
 # 📸 Screenshots
 
-
+```
 screenshots/login.PNG
 
 screenshots/analytics_dashboard.PNG
@@ -246,6 +268,12 @@ screenshots/home page.PNG
 
 screenshots/registration.PNG
 ```
+
+### Current Limitations
+
+- Alarm  Management CRUD(create, Read, Update, Delete ) is fully implemented. Browser side scheduled alarm triggering is not done yet.
+- Response time of API is bit slow. It will be fast soon.
+
 
 ---
 
@@ -259,7 +287,7 @@ screenshots/registration.PNG
 
 ---
 
-# 🤝 Contributing
+### 🤝 Contributing
 
 Contributions are always welcome!
 

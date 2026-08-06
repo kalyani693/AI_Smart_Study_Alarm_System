@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>smart alarm</title>
+    <link rel="stylesheet" href="../css/alarm.css">
+</head>
+<body>
+    <div class="container">
+        <div class="heading"><h3>Smart Alarm</h3></div>
+        <div class="navbar">
+          <button id="new_alarm">+</button>
+          <a href="index.html"><button id="closebtn">X</button></a>
+        </div>
+        <div class="existing_Alarms">
+            
+            
+        </div>
+        <br>
+        <br>
+        <div class="message"></div>
+
+
+        <!--create alarm popup-->
+        <div class="createalarm_popup">
+            <div class="topsection">
+                <h4>Create New alarm</h4>
+                <a href="alarm.html"><button id="closebtn">X</button></a>
+            </div>
+            <div class="inputs">
+                Time:<input id="timeinput" type="time">
+                Label:<input  id="labelinput" type="text" placeholder="e.g Python Class">
+                <br>
+                <div class="checkboxes">
+                <h4>Repeat_On: </h4><br>
+                        <label for="monday">Monday</label>
+                       <input class="repeatOn_ip" type="checkbox" name="day" value="monday"> 
+                        
+                         <label for="tuesday">Tuesday</label>
+                        <input class="repeatOn_ip" type="checkbox" name="day" value="tuesday"> 
+                       
+                        <label for="wednesday">Wednesday</label>
+                        <input class="repeatOn_ip" type="checkbox" name="day" value="wednesday"> 
+                        
+                        <label for="thusday">Thusday</label>
+                        <input class="repeatOn_ip" type="checkbox" name="day" value="thusday">
+                         
+                        <label for="friday">Friday</label>
+                        <input class="repeatOn_ip" type="checkbox" name="day" value="friday"> 
+                        
+                        <label for="saturday">Saturday</label>
+                        <input class="repeatOn_ip" type="checkbox" name="day" value="saturday"> 
+                        
+                        <label for="sunday">Sunday</label>
+                        <input class="repeatOn_ip" type="checkbox" name="day" value="sunday"> 
+                        </div>
+                        
+            </div>
+            <br>
+            <br>
+            <div class="createbutton"><button id="createbtn">Create</button></div>
+            
+            <div class="responsebox">
+
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../javascript/alarm.js"></script>
+</html>

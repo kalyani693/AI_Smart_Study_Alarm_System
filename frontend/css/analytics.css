@@ -113,8 +113,17 @@ body {
 /*charts*/
 .charts{
     height: fit-content;
-    width: 80vw auto;
+    width: 60vw auto;
+    margin-top: 20vh;
     margin-left: 20vw;
     margin-right: 20vw;
+    max-width: 60vw;
+    max-height: 60vh;
 
+}
+
+.chartheading{
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
 }

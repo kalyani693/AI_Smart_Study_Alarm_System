@@ -4,6 +4,8 @@ const barchart=document.querySelector("#score_timeofday_btn");
 const piechart=document.querySelector("#subject_distribution_btn");
 const token=localStorage.getItem("access_token")
 
+
+//connect backend
  async function connect_backend() {
     const url = "http://127.0.0.1:8000/analytics/stats";
     
@@ -31,9 +33,7 @@ const token=localStorage.getItem("access_token")
     }  
 }
 
-document.addEventListener("DOMContentLoaded", connect_backend);
-
-//charts
+//get sleep hour and performance score
  async function  get_sleepHour_Performance_score(){
    //sleep_hours
    try{
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", connect_backend);
    } );
 
    let data1= await response1.json();
-   sleep_hours=data1.sleep_hours;
+   const sleep_hours=data1.sleep_hours||[];
 
    //study_performance
 
@@ -58,21 +58,26 @@ document.addEventListener("DOMContentLoaded", connect_backend);
                      "Content-Type":"application/json"}
    });
    let data2= await response2.json();
+   let res=data2.response||[];
    const performance_score=[];
-
-   for (let row of data2){
-      performance_score.push(row.average_focus_score||0)
-   };
+   
+   if (res){
+      res.forEach(item => {
+         performance_score.push(item.average_focus_score||0)
+      });
+   }
+   
 
    return {"sleep_hours":sleep_hours,
       "performance_score": performance_score}  
 }
 catch(err)
 {  console.error(err);  
-   //alert("Something went wrong while fetching charts information. Please make sure backend is running.");
+   chartscontainer.innerHTML=`<h4 style="color:red;"> Failed to Load data</h4>`;
 }
   };
-
+ 
+  //get subject scores
  async function get_subject_score(){
    try{
    const url="http://127.0.0.1:8000/analytics/subject_distribution";
@@ -84,6 +89,7 @@ catch(err)
    } );
 
    let data= await response.json();
+   data=data.response||[];
    let subject=[];
    let score=[];
    let sessions=[];
@@ -106,10 +112,12 @@ catch(err)
    
  }
  catch{
-   chartscontainer.innerHTML=`<h4> Failed to Load data</h4>`;
+   chartscontainer.innerHTML=`<h4 style="color:red;"> Failed to Load data</h4>`;
  }
 };
 
+
+//get time of day and score
 async function get_timeofday_score(){
    try{
    const url="http://127.0.0.1:8000/analytics/focus_score_per_timeOfday";
@@ -121,6 +129,7 @@ async function get_timeofday_score(){
    } );
 
    let data= await response.json();
+   data=data.response||[];
    let time_of_day=[];
    let score=[];
 
@@ -136,14 +145,15 @@ async function get_timeofday_score(){
       }
    }
    else if (data.detail||data.details){
-      chartscontainer.innerHTML=`<h4> Failed to Load data:${data.detail||data.details} </h4>`;
+      chartscontainer.innerHTML=`<h4 style="color:red;"> Failed to Load data:${data.detail||data.details} </h4>`;
    }
    
  }
  catch{
-   chartscontainer.innerHTML=`<h4> Failed to Load data</h4>`;
+   chartscontainer.innerHTML=`<h4 style="color:red;"> Failed to Load data</h4>`;
  }
 };
+
 
  let currentchart=null;
  function charts(x_data, y_data,x_label,y_label, type){
@@ -155,6 +165,22 @@ async function get_timeofday_score(){
             if(currentchart){
                currentchart.destroy();
             }
+            
+
+           let chartOptions={
+             responsive:true
+           };
+
+           if(type!=='pie'||type!=='doughnut'){
+            chartOptions.scale={
+               
+                    y: {
+                    beginAtZero: true
+                    }
+                
+                };
+            }
+           
 
             currentchart=new Chart(ctx, {
                 type:type,
@@ -166,33 +192,45 @@ async function get_timeofday_score(){
                     borderWidth: 1
                 }]
                 },
-                options: {
-                scales: {
-                    y: {
-                    beginAtZero: true
-                    }
-                }
-                }
+                
+                options:chartOptions
             });
          };
+
+
+
+ const chartheading=document.querySelector(".chartheading");
 
  linechart.addEventListener("click", async ()=>{
    try{
       const {sleepHours,PerformanceScore}= await get_sleepHour_Performance_score();
+      //for checking
+      console.log("sleephours",sleepHours);
+       console.log("performance->",PerformanceScore);
+
       charts(sleepHours,PerformanceScore,'sleep Hours',"performance",'line');
+      chartheading.innerHTML=`Sleep Hours vs Performance score`;
+
    }
-   catch(err){
-      console.error(err);
+   catch(error){
+      console.error(error);
    }    
  });
 
  barchart.addEventListener("click", async ()=>{
    try{
-      const {time_of_day,sessions}=await get_timeofday_score();
-      charts(time_of_day,sessions,'Time of Day', "NO of Sessions" ,'bar');
+      const {time_of_day,score}=await get_timeofday_score();
+
+
+      console.log("time_of_day",time_of_day);
+       console.log("score->",score);
+
+
+      charts(time_of_day,score,'Time of Day', "Focus-score" ,'bar');
+      chartheading.innerHTML=`Time of Day vs focums score`;
    }
-   catch(err){
-      console.error(err);
+   catch(error){
+      console.error(error);
    }    
  });
  
@@ -200,15 +238,20 @@ async function get_timeofday_score(){
  piechart.addEventListener("click", async ()=>{
    try{
       const {subject,score,sessions}=await get_subject_score();
+
+       console.log("subject",subject);
+       console.log("score->",score);
+
       charts(subject,sessions, 'Subject','Session','pie');
+      chartheading.innerHTML=`subject Distribution.`;
    }
-   catch(err){
-      console.error(err);
+   catch(error){
+      console.error(error);
    }    
  });
  
 
 
  
-
+document.addEventListener("DOMContentLoaded", connect_backend);
 

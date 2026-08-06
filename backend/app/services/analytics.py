@@ -58,8 +58,8 @@ async def get_performance(user,db):
       data=db.execute(stm).all()
       if not data:
           return {"message":"No data found for the user."}
-      return {({"date":data.created_at if data.created_at else None ,
-              "average_focus_score":data[1] if data else 0} for data in data)
+      return {"response":[{"date":data.created_at if data.created_at else None ,
+              "average_focus_score":data[1] if data else 0} for data in data]
               }
 
    except Exception as e:
@@ -72,9 +72,9 @@ async def subject_distribution(user,db):
        if not data:
            return {"message":"No study session data found for the user."}
        else:
-           return{({"subject":row[0] if row[0] else None,
+           return{"response":[{"subject":row[0] if row[0] else None,
                     "sessions":row[1] if row[1] else 0,
-                    "avg_focus_score":row[2] if row[2] else 0} for row in data)}
+                    "avg_focus_score":row[2] if row[2] else 0} for row in data]}
    except Exception as e:
             raise HTTPException(status_code=500,detail=f"Error:{str(e)}")    
       
@@ -85,8 +85,8 @@ async def focus_score_per_timeOfday(user,db):
        if not data:
            return {"message":"No data found for the user."}
        else:
-           return{({"Time_of_day":row[0] if row[0] else None,
-                    "avg_focus_score":row[1] if row[1] else 0} for row in data)}
+           return{"response":[{"Time_of_day":row[0] if row[0] else None,
+                    "avg_focus_score":row[1] if row[1] else 0} for row in data]}
    except Exception as e:
             raise HTTPException(status_code=500,detail=f"Error:{str(e)}") 
        

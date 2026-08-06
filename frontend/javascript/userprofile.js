@@ -63,8 +63,10 @@ const url = "http://127.0.0.1:8000/user/userProfile";
             <p><strong>Email:</strong> ${user.email}</p>
             <p><strong>Highest Class:</strong> ${user.highestclass}</p>
             <p><strong>School/College Name:</strong> ${user.school_college}</p>
-            <p><strong>Location(City,State,Country):</strong> ${user.location}</p>
-            <p><strong>Work History:</strong> ${user.work_history}</p>
+            <p><strong>Location/Address:</strong> ${user.location}</p>
+            <p><strong>Work History:</strong>Job Title: ${user.work_history.job_title||"-"},
+                                             Company Name: ${user.work_history.Company_Name||"-"}
+                                             Year of Experience: ${user.work_history.Year_of_Experience||0}</p>
             <p><strong>Key Skills:</strong> ${user.key_skills}</p>
         `;
     }

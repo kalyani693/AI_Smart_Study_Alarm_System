@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>smart study</title>
+    <link rel="stylesheet" href="../css/smart_study.css">
+</head>
+<body>
+    <div class="container">
+       
+        <div class="heading"><h3>Smart Study</h3></div>
+        <div class="navbar">
+          <a href="index.html"><button id="closebtn">X</button></a>
+        </div>
+
+        <div class="card">
+            <div class="card-item">
+                <span>Let's get ready for your Exams.</span>
+                <a href="#" id="getplan-btn">Get study plan ⬇</a>
+                <div id="getplan-box" class="dropdown-menu" style="display: none;">
+                    Syllabus:<br>
+                    <input id="file-input" type="file" placeholder="Syllabus">
+                    Exam date:<br>
+                    <input id="exam-input" type="date" placeholder="Exam date">
+                    <br>
+                    Daily Study Hours:<br>
+                    <input id="studyhours-input" type="number" placeholder="study Hours">
+                    <br>
+                    <br>
+                    <button id="ok-studyplan">Ok</button>
+                </div>    
+            </div>
+
+
+            <div class="card-item">
+                <span>Predict your focus score for session.</span>
+                <a href="#" id="focus_score_btn">Focus score Predictor ⬇</a>
+                <div id="focus_score_box" class="dropdown-menu" style="display: none;">
+                    <input id="session_duration-input" type="number" placeholder="session duration in min">
+                    <input id="subject-type" type="text" placeholder="Subject-Type">
+                    <br>
+                    <br>
+                    <button id="ok-score">Ok</button>
+
+                     <div class="res1">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-item"><span>Check Which is best time for you to study.</span>
+                <a href="#" id="best_slot_btn">Best Time Slot</a>
+                <div class="res2">
+
+                    </div>
+            </div>
+
+        </div>
+
+        <!--Response popup-->
+        <div class="study_plan_popup">
+            <a href="smart_study.html"><span class="closebtn">Back</span></a>
+         
+            <div class="tablecontainer">
+                <h4 id="heading">Study Plan</h4>
+                <br>
+                <br>
+               <div class="responsetable">
+              </div>
+           </div>
+            
+        </div>
+    
+    </div>
+</body>
+<script src="../javascript/smart_study.js"></script>
+</html>

@@ -17,9 +17,9 @@ def getdb():
 
 class userdatatable(base):
     __tablename__="userdatatable"
-    Id=Column(Integer, autoincrement=True)
+    Id=Column(Integer, autoincrement=True,primary_key=True)
     Full_Name=Column(VARCHAR(40),nullable=False)
-    Username=Column(VARCHAR(40),primary_key=True)
+    Username=Column(VARCHAR(40),unique=True,nullable=False)#primary_key=True
     Email=Column(VARCHAR(100),unique=True,nullable=False)
     Highest_Class=Column(VARCHAR(20),nullable=False)
     School_College=Column(VARCHAR(100),nullable=False)
