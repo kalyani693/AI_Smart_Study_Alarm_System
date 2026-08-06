@@ -6,6 +6,7 @@ from sqlalchemy.orm import session
 from typing import Annotated
 from sqlalchemy import text
 from datetime import datetime,timezone
+from sqlalchemy import select,func
 
 router=APIRouter()
 dependancy=Annotated[session,Depends(getdb)]
@@ -100,20 +101,28 @@ def editalarm(input:editalarm,db:dependancy,user=Depends(auth.check_user)):
         raise HTTPException(status_code=500,detail=f"Error in updating alarm:{str(e)}") 
     
 
-@router.delete("/delete/{alarmid}")
+@router.delete("/delete/{alarm_id}")
 def delalarm(alarm_id:int,db:dependancy,user=Depends(auth.check_user)):
     try:
         alarm=db.query(alarmtable).filter(alarmtable.Id==alarm_id).first()
                 
         if not alarm:
             raise HTTPException(status_code=400,detail=f"Alarm with Id:{alarm_id} is not Found")
-        
-        query=text(f"""delete from alarmtable where "Id"={alarm_id};""")
-        response=db.execute(query)
+
+        alarm.status="deleted"
         db.commit()
-        if response._soft_closed==True:
-            return{"message":"Alarm deleted Succesfully!!"}
-        else:
-            return{"message":"Something went wrong"}
+        return{"message":"Alarm deleted Succesfully!!"}
+    
     except Exception as e:
         raise HTTPException(status_code=500,detail=f"Error in deleting alarm:{str(e)}")
+
+@router.get("/existing_alarm")
+def getexistingalarm(db:dependancy,user=Depends(auth.check_user)):
+    try:
+        stm=select(alarmtable).where(alarmtable.Username==user.Username, alarmtable.status!="deleted")
+        alarm=db.execute(stm).scalars().all()
+        if not alarm:
+            return{"detail":"No existing data Found"}
+        return{"alarms":alarm}
+    except Exception as e:
+        raise HTTPException(status_code=500,detail=f"Error in getting alarm:{str(e)}")     
