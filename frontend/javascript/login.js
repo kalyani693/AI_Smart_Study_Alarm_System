@@ -3,6 +3,8 @@ const password=document.getElementById("pass");
 const loginbtn=document.getElementById("loginbtn");
 const formdata=new FormData();
 
+const responsebox=document.querySelector(".responsebox");
+
 
 async function connect() {
    const url="http://127.0.0.1:8000/auth/login"
@@ -22,6 +24,12 @@ async function connect() {
         body:formdata
     });
     let data=await response.json();
+
+    if(response.ok){
+       //save token in localstorage
+        localStorage.setItem("access_token",data.access_token);
+    }
+
     console.log(data)
     //regibtn.innerHTML=Register
     loginbtn.disabled=false;
@@ -29,27 +37,23 @@ async function connect() {
     
 
 
-    let result = document.createElement("h3");
-        result.classList.add("result-msg");
+    //let result = document.createElement("h3");
+        //result.classList.add("result-msg");
         
     if (data.detail || data?.detail?.error){
-        result.textContent = data?.detail?.error;
-        result.style.color = "red";
+        responsebox.innerHTML=`<p style="color:red;">${data.detail||data.details}</p>`;
     }
     else{
-        result.textContent="LoggedIn Successfully!";
+        responsebox.innerHTML=`<p style="color:green;">"LoggedIn Successfully!"</p>`;
+        //result.textContent="LoggedIn Successfully!";
     }
     
-    loginbtn.after(result);
-
-    if (response.ok){
-        //save token in localstorage
-        localStorage.setItem("access_token",data.access_token);
+    //loginbtn.after(result);
 
         setTimeout(() => {
                 window.location.href("index.html")
             }, 10000);
-    }    
+       
   }
   catch (error) {
         console.error("error:", error);
