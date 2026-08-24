@@ -73,4 +73,5 @@ uuid_utils
 uvicorn                  
 websockets              
 xxhash                  
-zstandard            
+zstandard   
+pytesseract         
