@@ -6,6 +6,10 @@ let summarizer_box=document.getElementById("summarizer-box");
 let quize_btn=document.getElementById("quize-btn")
 let quize_box=document.getElementById("quize-box")
 
+let quizeOptionbtn=document.getElementById("quize_type")
+let quizeTypes=document.getElementById("quizeOptions")
+
+
 sumarizer_btn.addEventListener("click", function(event){
     event.preventDefault();
 
@@ -27,6 +31,17 @@ quize_btn.addEventListener("click", function(event){
     }
 });
 
+quizeOptionbtn.addEventListener("click", function(event){
+    event.preventDefault();
+
+    if (quizeTypes.style.display==='none'|| quizeTypes.style.display===''){
+        quizeTypes.style.display="block";
+    }else{
+        quizeTypes.style.display='none';
+    }
+});
+
+
 
 //summarizer
 let summary_popup=document.querySelector(".summary_popup");
@@ -38,6 +53,7 @@ const formdata=new FormData();
 
 //function
 async function get_summary() {
+  console.log(new Date())  
 
   formdata.append("Notes",notes.files[0]);
 
@@ -83,13 +99,22 @@ summarizebtn.addEventListener("click", async ()=>{
 let quize_popup=document.querySelector(".quize_popup");
 let quizesbox=document.querySelector(".quizesbox");
 
+
 const topic=document.querySelector("#topic-input");
 const getquize_btn=document.querySelector("#ok-quize");
+const quize_type=document.getElementById("quize_type");
 const formdata_=new FormData();
 
 //function
 async function get_quizes() {
+    console.log(new Date()) 
+     //checkbox inputs
+
+    const radiobtn=document.querySelectorAll('input[name="option"]:checked');
+    const selected_type=Array.from(radiobtn).map(cb =>cb.value);
+
   formdata_.append("Notes",topic.files[0]);
+  formdata_.append("quizeType",selected_type);
 
   try{
    const url="http://127.0.0.1:8000/ai/generate-quiz";
@@ -103,14 +128,36 @@ async function get_quizes() {
    let data= await response.json();
    const quizes=JSON.parse(data.response)||"Failed to get quizes";
 
+
    let quize_structure=``;
 
-   quizes.forEach(qz => {
-       quize_structure+=`<div class="quize-item">
+   if (quize_type==='True/False'){
+        quizes.forEach(qz => {
+        quize_structure+=`
+        <div class="quize-item">
             <p>
                 <h4 id="question">${qz}. ${qz.question}</h4>
                 <br>
-                
+                <div class="options">
+                    <input type="radio" name="option" value="True", id="op1">
+                    <label for="True">True</label><br>
+
+                    <input type="radio" name="option" value="False", id="op2">
+                    <label for="False">False</label><br>
+
+                </div>
+                <br>
+            </p>
+        </div>`; 
+    });
+    }
+    else{
+         quizes.forEach(qz => {
+        quize_structure+=`
+        <div class="quize-item">
+            <p>
+                <h4 id="question">${qz}. ${qz.question}</h4>
+                <br>
                 <div class="options">
                     <input type="radio" name="option" value="${qz.option_A}", id="op1">
                     <label for="${qz.option_A}">${qz.option_A}</label><br>
@@ -127,11 +174,13 @@ async function get_quizes() {
                 </div>
                 <br>
             </p>
-        </div>
-       `;
-   });
+        </div>`;
+    });
+    }
 
-   quize_structure+=`<button id="submit_quize" > Submit</button>`;
+
+    
+   quize_structure+=`<button id="submit_quize" style="color:white"> Submit</button>`;
 
    if(data.detail||data.details){
      quizesbox.innerHTML=`<h4>${data.detail||data.details}</h4>`;

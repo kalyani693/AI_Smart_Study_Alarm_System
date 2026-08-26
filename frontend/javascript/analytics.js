@@ -172,7 +172,7 @@ async function get_timeofday_score(){
            };
 
            if(type!=='pie'||type!=='doughnut'){
-            chartOptions.scale={
+            chartOptions.scales={
                
                     y: {
                     beginAtZero: true
@@ -181,7 +181,7 @@ async function get_timeofday_score(){
                 };
             }
            
-
+            
             currentchart=new Chart(ctx, {
                 type:type,
                 data: {
@@ -226,7 +226,7 @@ async function get_timeofday_score(){
        console.log("score->",score);
 
 
-      charts(time_of_day,score,'Time of Day', "Focus-score" ,'bar');
+       charts(time_of_day,score,'Time of Day', "Focus-score" ,'bar');
       chartheading.innerHTML=`Time of Day vs focums score`;
    }
    catch(error){
@@ -242,7 +242,7 @@ async function get_timeofday_score(){
        console.log("subject",subject);
        console.log("score->",score);
 
-      charts(subject,sessions, 'Subject','Session','pie');
+       charts(subject,sessions, 'Subject','Session','pie');
       chartheading.innerHTML=`subject Distribution.`;
    }
    catch(error){

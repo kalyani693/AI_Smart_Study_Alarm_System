@@ -18,7 +18,7 @@ if (logoutItem) {
     logoutItem.addEventListener("click", () => {
         
         localStorage.removeItem("access_token");
-        window.location.href = "index.html";
+        window.location.href = "homePage.html";
     });
 }
 
@@ -72,7 +72,7 @@ const url = "http://127.0.0.1:8000/user/userProfile";
     }
     }
     catch{
-       alert("Something went wrong while fetching user information. Please make sure backend is running.");
+       alert("Something went wrong while fetching user information. Make sure you are loggedIn and backend is running.");
     }
     
 }

@@ -17,17 +17,8 @@ const regibtn=document.getElementById("registerbtn");
 const responsebox=document.querySelector(".responsebox");
 
 async function connect() {
-   
-    /* Create loader
-    let loader = document.createElement("div");
-    loader.classList.add("loader");
-    loader.textContent = "";
-    regibtn.innerHTML=loader;*/
-
     regibtn.disabled=true;
    
-
-
     let input={
   "Full_Name" :full_name.value,
   "Username":username.value,
@@ -69,7 +60,11 @@ async function connect() {
     }
     else {
         responsebox.innerHTML=`<p style="color:green;">${res}</p>`;
-    }   
+    }
+    
+    if (response.ok()){
+        window.location.assign("login.html")
+    }
   }
   catch (error) {
         console.error("error:", error);

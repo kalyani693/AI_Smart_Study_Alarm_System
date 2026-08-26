@@ -1,9 +1,10 @@
 const sessionHistory=document.querySelector("#history");
 const popup=document.querySelector(".popup");
 const table=document.querySelector(".historytable");
+const token=localStorage.getItem("access_token"); 
 
 async function get_session_history(){
-  const token=localStorage.getItem("access_token");  
+   
   try{
    const url="http://127.0.0.1:8000/study/history";
 
@@ -70,16 +71,28 @@ sessionHistory.addEventListener("click",async ()=>{
         await get_session_history();
 });
 
-/*sessionHistory.addEventListener("click",  async function(event){
-    event.preventDefault();
+//connect backend
+ async function avgFocus_score() {
+    const url = "http://127.0.0.1:8000/analytics/stats";
+    
+    try{
+         let response = await fetch(url, {
+            method:'POST',
+            headers:{"Authorization":`Bearer ${token}`,
+                     "Content-Type":"application/json"}
+        });
+        let data = await response.json();
+        console.log(data)
 
-    if(popup.style.display==='none'|| popup.style.display===''){
-        popup.style.display="block";
-         table.innerHTML="<p> Loading history..</p>";
-          //function call
-        await get_session_history();
-    }
-    else{
-        popup.style.display= 'none';
-    }
-});*/
+    let avg_focus_score=data.average_focus_score;
+    const focusScore=document.querySelector(".focusScore");
+    focusScore.textContent=`Predicted Focus score:${avg_focus_score}`;
+  }
+  catch(error)
+  {
+     console.log(error);
+     alert("something went wrong");
+  }
+  };
+
+document.addEventListener("DOMContentLoaded", avgFocus_score);  
