@@ -11,7 +11,7 @@
        
         <div class="heading"><h3>AI Tools</h3></div>
         <div class="navbar">
-          <a href="index.html"><button id="closebtn">X</button></a>
+          <a href="homePage.html"><button id="closebtn">X</button></a>
         </div>
 
         <div class="card">
@@ -26,7 +26,7 @@
                 </div>    
             </div>
             -->
-
+            <!--summary dropdown-->
             <div class="card-item">
                 <span>Don't waste Your time by Reading n pages, Summarize your Notes.</span>
                 <a href="#" id="sumarizer-btn">Summarizer ⬇</a>
@@ -38,12 +38,25 @@
                     <button id="ok-summarize">Ok</button>
                 </div>
             </div>
-
+            
+            <!--quize dropdown-->
             <div class="card-item"><span>Enhance your learning by practicing MCQ's.</span>
                 <a href="#" id="quize-btn">Quize ⬇</a>
                 <div id="quize-box" class="dropdown-menu" style="display: none;">
                     <h4>Topic/Notes:</h4>
                     <input id="topic-input" type="file" placeholder="Topic/Notes">
+                    <br><br>
+                    <button id="quize_type">Quize Type</button>
+                    
+                    <div id="quizeOptions" style="display: none;">
+                        <label for="MCQ">MCQ</label>
+                        <input type="radio" name="option" value="MCQ">
+                        <label for="Fill The Blank">Fill The Blank</label>
+                        <input type="radio" name="option"  value="Fill The Blank">
+                        <label for="True/False">True/False</label>
+                        <input type="radio" name="option"  value="True/False">
+                   </div>
+                    
                     <br><br>
                     <button id="ok-quize">Ok</button>
                 </div>
