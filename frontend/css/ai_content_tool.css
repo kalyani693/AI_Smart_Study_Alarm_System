@@ -66,11 +66,11 @@ body{
     border-radius: 10px;
 }
 
-.dropdown-menu{
+.dropdown-menu,#quizeOptions{
     display: flex;
     flex-direction: column;
     gap :20px;
-    width: 250px;
+    width: 300px;
     align-items: stretch;
     margin-top: 10px;
 }
